@@ -1263,7 +1263,7 @@ dependencies = [
 
 [[package]]
 name = "bevy_voxel_world"
-version = "0.12.0"
+version = "0.11.1"
 dependencies = [
  "ahash 0.8.11",
  "bevy 0.16.0",
