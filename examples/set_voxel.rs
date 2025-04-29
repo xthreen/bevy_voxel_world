@@ -24,17 +24,18 @@ fn setup(mut commands: Commands) {
     commands.insert_resource(AmbientLight {
         color: Color::srgb(0.98, 0.95, 0.82),
         brightness: 1000.0,
+        ..default()
     });
 }
 
 fn set_solid_voxel(mut voxel_world: VoxelWorld<DefaultWorld>) {
     // Generate some random values
     let size = 10;
-    let mut rng = rand::thread_rng();
-    let x = rng.gen_range(-size..size);
-    let y = rng.gen_range(-size..size);
-    let z = rng.gen_range(-size..size);
-    let voxel_type = rng.gen_range(0..4);
+    let mut rng = rand::rng();
+    let x = rng.random_range(-size..size);
+    let y = rng.random_range(-size..size);
+    let z = rng.random_range(-size..size);
+    let voxel_type = rng.random_range(0..4);
     let pos = IVec3::new(x, y, z);
 
     // Set a voxel at the random position with the random type
@@ -48,7 +49,7 @@ fn move_camera(
     time: Res<Time>,
     mut query: Query<&mut Transform, With<VoxelWorldCamera<DefaultWorld>>>,
 ) {
-    let mut transform = query.single_mut();
+    let mut transform = query.single_mut().expect("Query should find the camera transform.");
     let time_seconds = time.elapsed_secs();
     transform.translation.x = 25.0 * (time_seconds * 0.1).sin();
     transform.translation.z = 25.0 * (time_seconds * 0.1).cos();
